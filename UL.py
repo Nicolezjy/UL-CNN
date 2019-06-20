@@ -86,17 +86,17 @@ def inference(input_tensor,train,regularizer):
 
     
     with tf.variable_scope('layer6-fc1'):
-        fc1_weights = tf.get_variable('weight',[nodes,1024],initializer=tf.truncated_normal_initializer(stddev=0.1))
+        fc1_weights = tf.get_variable('weight',[nodes,512],initializer=tf.truncated_normal_initializer(stddev=0.1))
         if regularizer != None:
             tf.add_to_collection('losses',regularizer(fc1_weights))
-        fc1_biases = tf.get_variable('bias',[1024],initializer=tf.constant_initializer(0.1))
+        fc1_biases = tf.get_variable('bias',[512],initializer=tf.constant_initializer(0.1))
         fc1 = tf.nn.relu(tf.matmul(reshaped,fc1_weights) + fc1_biases)
         if train:
             fc1 = tf.nn.dropout(fc1,0.5)
 
     
     with tf.variable_scope('layer7-fc2'):
-        fc2_weights = tf.get_variable('weight',[1024,32],initializer=tf.truncated_normal_initializer(stddev=0.1))
+        fc2_weights = tf.get_variable('weight',[512,32],initializer=tf.truncated_normal_initializer(stddev=0.1))
         if regularizer != None:
             tf.add_to_collection('losses',regularizer(fc2_weights))
         fc2_biases = tf.get_variable('bias',[32],initializer=tf.truncated_normal_initializer(stddev=0.1))
